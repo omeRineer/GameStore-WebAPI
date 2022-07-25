@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Core.Utilities.ResultTool;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -11,36 +12,42 @@ namespace Business.Concrete
 {
     public class CompanyManager : ICompanyService
     {
-        private readonly ICompanyService _companyService;
+        private readonly ICompanyDal _companyDal;
 
-        public CompanyManager(ICompanyService companyService)
+        public CompanyManager(ICompanyDal companyDal)
         {
-            _companyService = companyService;
+            _companyDal = companyDal;
         }
 
         public IResult Add(Company company)
         {
-            throw new NotImplementedException();
+            _companyDal.Add(company);
+            return new SuccessResult();
         }
 
         public IResult Delete(int companyId)
         {
-            throw new NotImplementedException();
+            var entity= _companyDal.Get(x=>x.Id==companyId);
+            _companyDal.Delete(entity);
+            return new SuccessResult();
         }
 
         public IDataResult<List<Company>> GetAll()
         {
-            throw new NotImplementedException();
+            var result= _companyDal.GetAll();
+            return new SuccessDataResult<List<Company>>(result);
         }
 
         public IDataResult<Company> GetById(int companyId)
         {
-            throw new NotImplementedException();
+            var result=_companyDal.Get(x=>x.Id ==companyId);
+            return new SuccessDataResult<Company>(result);
         }
 
         public IResult Update(Company company)
         {
-            throw new NotImplementedException();
+            _companyDal.Update(company);
+            return new SuccessResult();
         }
     }
 }

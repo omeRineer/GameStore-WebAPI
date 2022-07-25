@@ -14,9 +14,4 @@
     <PackageReference Include="FluentValidation" Version="10.4.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DependencyResolvers\Ninject\" />
-    <Folder Include="ValidationRules\FluentValidation\" />
-  </ItemGroup>
-
 </Project>

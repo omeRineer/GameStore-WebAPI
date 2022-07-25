@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Core.Utilities.ResultTool;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -8,36 +9,42 @@ namespace Business.Concrete
 {
     public class CategoryManager : ICategoryService
     {
-        private readonly ICategoryService _categoryService;
+        private readonly ICategoryDal _categoryDal;
 
-        public CategoryManager(ICategoryService categoryService)
+        public CategoryManager(ICategoryDal categoryDal)
         {
-            _categoryService = categoryService;
+            _categoryDal = categoryDal;
         }
 
         public IResult Add(Category category)
         {
-            throw new NotImplementedException();
+            _categoryDal.Add(category);
+            return new SuccessResult();
         }
 
         public IResult Delete(int categoryId)
         {
-            throw new NotImplementedException();
+            var entity=_categoryDal.Get(x=>x.Id == categoryId);
+            _categoryDal.Delete(entity);
+            return new SuccessResult();
         }
 
         public IDataResult<List<Category>> GetAll()
         {
-            throw new NotImplementedException();
+            var result = _categoryDal.GetAll();
+            return new SuccessDataResult<List<Category>>(result);
         }
 
         public IDataResult<Category> GetById(int id)
         {
-            throw new NotImplementedException();
+            var result = _categoryDal.Get(x => x.Id == id);
+            return new SuccessDataResult<Category>(result);
         }
 
         public IResult Update(Category category)
         {
-            throw new NotImplementedException();
+            _categoryDal.Update(category);
+            return new SuccessResult();
         }
     }
 }

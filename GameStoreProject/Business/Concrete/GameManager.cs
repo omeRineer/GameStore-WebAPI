@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Core.Utilities.ResultTool;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -8,36 +9,42 @@ namespace Business.Concrete
 {
     public class GameManager : IGameService
     {
-        private readonly IGameService _gameService;
+        private readonly IGameDal _gameDal;
 
-        public GameManager(IGameService gameService)
+        public GameManager(IGameDal gameDal)
         {
-            _gameService = gameService;
+            _gameDal = gameDal;
         }
 
         public IResult Add(Game game)
         {
-            throw new NotImplementedException();
+            _gameDal.Add(game);
+            return new SuccessResult();
         }
 
         public IResult Delete(int gameId)
         {
-            throw new NotImplementedException();
+            var entity=_gameDal.Get(x=>x.Id == gameId);
+            _gameDal.Delete(entity);
+            return new SuccessResult();
         }
 
         public IDataResult<List<Game>> GetAll()
         {
-            throw new NotImplementedException();
+            var result = _gameDal.GetAll();
+            return new SuccessDataResult<List<Game>>(result);
         }
 
         public IDataResult<Game> GetById(int id)
         {
-            throw new NotImplementedException();
+            var result=_gameDal.Get(x=>x.Id==id);
+            return new SuccessDataResult<Game>(result);
         }
 
         public IResult Update(Game game)
         {
-            throw new NotImplementedException();
+            _gameDal.Update(game);
+            return new SuccessResult();
         }
     }
 }
