@@ -1,9 +1,11 @@
-﻿using Entities.Concrete;
+﻿using DataAccess.Concrete.EntityFramework.ModelConfigurations;
+using Entities.Concrete;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,13 +20,7 @@ namespace DataAccess.Concrete.EntityFramework
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Game>(game =>
-            {
-                game.HasOne(x => x.Company)
-                    .WithMany(y => y.Games)
-                    .HasForeignKey(x=>x.DistributorId)
-                    .HasForeignKey(x=>x.DeveloperId);
-            });
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
         public DbSet<Game> Games { get; set; }
