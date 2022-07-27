@@ -1,4 +1,5 @@
 using Core.Extensions;
+using Core.ServiceModules;
 using DataAccess.Concrete.EntityFramework;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +29,11 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddServiceModules(new IServiceModule[]
+            {
+                new MeArchitectureServiceModule(Configuration)
+            });
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
