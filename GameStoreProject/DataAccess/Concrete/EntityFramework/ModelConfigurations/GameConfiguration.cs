@@ -13,23 +13,34 @@ namespace DataAccess.Concrete.EntityFramework.ModelConfigurations
     {
         public void Configure(EntityTypeBuilder<Game> builder)
         {
+            builder.Property(x => x.CategoryId)
+                   .IsRequired();
+
+            builder.Property(x => x.DeveloperId)
+                   .IsRequired();
+
+            builder.Property(x => x.DistributorId)
+                   .IsRequired();
+
             builder.Property(x => x.Name)
-                    .IsRequired()
-                    .HasMaxLength(75);
+                   .IsRequired()
+                   .HasMaxLength(75);
+
+            builder.Property(x => x.Price)
+                   .IsRequired();
 
             builder.Property(x => x.ReleaseDate)
-                .IsRequired()
-                .HasColumnType("date");
+                   .IsRequired()
+                   .HasColumnType("date");
 
             builder.Property(x => x.Description)
                 .HasMaxLength(500);
 
-            
 
-            builder.HasOne(x => x.Company)
-                .WithMany(y => y.Games)
-                .HasForeignKey(x => x.DistributorId)
-                .HasForeignKey(x => x.DeveloperId);
+            builder.HasMany(x=>x.GameImages)
+                   .WithOne(x=>x.Game)
+                   .HasForeignKey(x=>x.GameId);
+            
         }
     }
 }

@@ -13,7 +13,17 @@ namespace DataAccess.Concrete.EntityFramework.ModelConfigurations
     {
         public void Configure(EntityTypeBuilder<Company> builder)
         {
-            
+            builder.Property(x => x.Name)
+                   .IsRequired()
+                   .HasMaxLength(50);
+
+            builder.Property(x=>x.WebSite)
+                   .HasMaxLength(100);
+
+            builder.HasMany(x => x.Games)
+                   .WithOne(x => x.Company)
+                   .HasForeignKey(x => x.DistributorId)
+                   .HasForeignKey(x => x.DeveloperId);
         }
     }
 }

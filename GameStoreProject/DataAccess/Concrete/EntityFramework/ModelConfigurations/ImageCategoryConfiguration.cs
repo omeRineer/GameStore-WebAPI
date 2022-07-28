@@ -1,23 +1,18 @@
 ﻿using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework.ModelConfigurations
 {
-    public class CategoryConfiguration : IEntityTypeConfiguration<Category>
+    public class ImageCategoryConfiguration : IEntityTypeConfiguration<ImageCategory>
     {
-        public void Configure(EntityTypeBuilder<Category> builder)
+        public void Configure(EntityTypeBuilder<ImageCategory> builder)
         {
             builder.Property(x => x.Name)
                    .IsRequired()
-                   .HasMaxLength(50);
+                   .HasMaxLength(25);
 
-            builder.HasMany(x=>x.Games)
+            builder.HasMany(x=>x.GameImages)
                    .WithOne(x=>x.Category)
                    .HasForeignKey(x=>x.CategoryId);
         }

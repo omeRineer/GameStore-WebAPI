@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework.ModelConfigurations
 {
-    public class CategoryConfiguration : IEntityTypeConfiguration<Category>
+    public class GamerConfiguration : IEntityTypeConfiguration<Gamer>
     {
-        public void Configure(EntityTypeBuilder<Category> builder)
+        public void Configure(EntityTypeBuilder<Gamer> builder)
         {
-            builder.Property(x => x.Name)
+            builder.Property(x => x.FirstName)
                    .IsRequired()
                    .HasMaxLength(50);
 
-            builder.HasMany(x=>x.Games)
-                   .WithOne(x=>x.Category)
-                   .HasForeignKey(x=>x.CategoryId);
+            builder.Property(x => x.LastName)
+                   .IsRequired()
+                   .HasMaxLength(50);
         }
     }
 }

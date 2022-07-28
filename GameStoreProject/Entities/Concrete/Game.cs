@@ -20,5 +20,6 @@ namespace Entities.Concrete
 
         public Company Company { get; set; }
         public Category Category { get; set; }
+        public ICollection<GameImage> GameImages { get; set; }
     }
 }

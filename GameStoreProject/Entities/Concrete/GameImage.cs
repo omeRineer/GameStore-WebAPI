@@ -10,7 +10,12 @@ namespace Entities.Concrete
     public class GameImage:IEntity
     {
         public int Id { get; set; }
+        public int CategoryId { get; set; }
+        public int GameId { get; set; }
         public string ImagePath { get; set; }
         public bool State { get; set; }
+
+        public ImageCategory Category { get; set; }
+        public Game Game { get; set; }
     }
 }
