@@ -28,6 +28,11 @@ namespace DataAccess.Concrete.EntityFramework.ModelConfigurations
             builder.Property(x => x.PhoneNumber)
                    .IsRequired()
                    .HasMaxLength(25);
+
+
+            builder.HasMany(x=>x.UserRoleClaims)
+                   .WithOne(x=>x.User)
+                   .HasForeignKey(x=>x.UserId);
         }
     }
 }

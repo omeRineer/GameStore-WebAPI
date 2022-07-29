@@ -34,6 +34,19 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoleClaims", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -47,27 +60,6 @@ namespace DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "GameImages",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
-                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    State = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GameImages", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_GameImages_ImageCategories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "ImageCategories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -109,6 +101,32 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    RoleClaimId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserRoleClaims_RoleClaims_RoleClaimId",
+                        column: x => x.RoleClaimId,
+                        principalTable: "RoleClaims",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserRoleClaims_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Games",
                 columns: table => new
                 {
@@ -139,10 +157,43 @@ namespace DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "GameImages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    GameId = table.Column<int>(type: "int", nullable: false),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    State = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GameImages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GameImages_Games_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Games",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_GameImages_ImageCategories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "ImageCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_GameImages_CategoryId",
                 table: "GameImages",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GameImages_GameId",
+                table: "GameImages",
+                column: "GameId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Games_CategoryId",
@@ -153,6 +204,16 @@ namespace DataAccess.Migrations
                 name: "IX_Games_DeveloperId",
                 table: "Games",
                 column: "DeveloperId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRoleClaims_RoleClaimId",
+                table: "UserRoleClaims",
+                column: "RoleClaimId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRoleClaims_UserId",
+                table: "UserRoleClaims",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -164,10 +225,16 @@ namespace DataAccess.Migrations
                 name: "Gamers");
 
             migrationBuilder.DropTable(
+                name: "UserRoleClaims");
+
+            migrationBuilder.DropTable(
                 name: "Games");
 
             migrationBuilder.DropTable(
                 name: "ImageCategories");
+
+            migrationBuilder.DropTable(
+                name: "RoleClaims");
 
             migrationBuilder.DropTable(
                 name: "Categories");

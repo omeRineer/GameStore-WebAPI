@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20220728145202_dbMigration2")]
-    partial class dbMigration2
+    [Migration("20220729221714_dbMigration")]
+    partial class dbMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,23 @@ namespace DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.15")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Core.Entities.Concrete.RoleClaim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RoleClaims");
+                });
 
             modelBuilder.Entity("Core.Entities.Concrete.User", b =>
                 {
@@ -51,6 +68,28 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Core.Entities.Concrete.UserRoleClaim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("RoleClaimId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleClaimId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserRoleClaims");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Category", b =>
@@ -189,6 +228,25 @@ namespace DataAccess.Migrations
                     b.ToTable("Gamers");
                 });
 
+            modelBuilder.Entity("Core.Entities.Concrete.UserRoleClaim", b =>
+                {
+                    b.HasOne("Core.Entities.Concrete.RoleClaim", "RoleClaim")
+                        .WithMany("UserRoleClaims")
+                        .HasForeignKey("RoleClaimId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Core.Entities.Concrete.User", "User")
+                        .WithMany("UserRoleClaims")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RoleClaim");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Entities.Concrete.Game", b =>
                 {
                     b.HasOne("Entities.Concrete.Category", "Category")
@@ -243,6 +301,16 @@ namespace DataAccess.Migrations
                         .HasForeignKey("Entities.Concrete.Gamer", "Id")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Core.Entities.Concrete.RoleClaim", b =>
+                {
+                    b.Navigation("UserRoleClaims");
+                });
+
+            modelBuilder.Entity("Core.Entities.Concrete.User", b =>
+                {
+                    b.Navigation("UserRoleClaims");
                 });
 
             modelBuilder.Entity("Entities.Concrete.Category", b =>
