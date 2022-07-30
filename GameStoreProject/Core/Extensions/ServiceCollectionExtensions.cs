@@ -1,4 +1,5 @@
 ﻿using Core.ServiceModules;
+using Core.Utilities.ServiceProvider;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace Core.Extensions
                     serviceModule.Load(services);
                 }
             }
+
             return services;
 
         }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using Core.Utilities.Identities.Jwt;
 using Core.Utilities.Helpers;
+using Microsoft.AspNetCore.Http;
 
 namespace Core.ServiceModules
 {
@@ -24,6 +25,7 @@ namespace Core.ServiceModules
 
         public void Load(IServiceCollection services)
         {
+            
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
