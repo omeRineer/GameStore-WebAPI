@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using Core.Utilities.Identities.Jwt;
+using Core.Utilities.Helpers;
 
 namespace Core.ServiceModules
 {
@@ -35,7 +36,7 @@ namespace Core.ServiceModules
 
                         ValidIssuer = TokenOptions.Issuer,
                         ValidAudience = TokenOptions.Audience,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TokenOptions.SecurityKey))
+                        IssuerSigningKey = SecurityKeyHelper.GetSecurityKey(TokenOptions.SecurityKey)
 
                     };
                 });

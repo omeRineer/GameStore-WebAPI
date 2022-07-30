@@ -9,6 +9,6 @@ namespace Core.Utilities.Identities.Jwt
 {
     public interface ITokenService
     {
-        AccessToken GenerateToken(User user);
+        AccessToken GenerateToken(User user, List<RoleClaim> roleClaims);
     }
 }

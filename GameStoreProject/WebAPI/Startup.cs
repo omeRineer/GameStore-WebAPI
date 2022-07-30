@@ -53,8 +53,6 @@ namespace WebAPI
 
             app.UseCustomExceptionHandler();
 
-            app.UseCustomTransaction();
-
             app.UseHttpsRedirection();
 
             app.UseRouting();

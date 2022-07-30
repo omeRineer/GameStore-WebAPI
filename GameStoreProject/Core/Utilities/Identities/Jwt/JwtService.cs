@@ -1,5 +1,5 @@
 ﻿using Core.Entities.Concrete;
-using Core.Utilities.Token.Helpers;
+using Core.Utilities.Helpers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -19,23 +19,27 @@ namespace Core.Utilities.Identities.Jwt
         public JwtService(IConfiguration configuration)
         {
             Configuration = configuration;
-            TokenOptions=Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+            TokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
         }
 
-        public AccessToken GenerateToken(User user)
+        public AccessToken GenerateToken(User user, List<RoleClaim> roleClaims)
         {
-            var symetricSecurityKey=SecurityKeyHelper.GetSecurityKey(TokenOptions.SecurityKey);
+            var symetricSecurityKey = SecurityKeyHelper.GetSecurityKey(TokenOptions.SecurityKey);
             var signingCredentials = new SigningCredentials(symetricSecurityKey, SecurityAlgorithms.HmacSha256);
+            var claims = GetClaims(user, roleClaims);
+
+
             var securityToken = new JwtSecurityToken
             (
                 issuer: TokenOptions.Issuer,
                 audience: TokenOptions.Audience,
+                claims: claims,
                 expires: DateTime.UtcNow.AddDays(TokenOptions.ExpirationTime),
                 notBefore: DateTime.UtcNow,
                 signingCredentials: signingCredentials
 
             );
-            var token=new JwtSecurityTokenHandler().WriteToken(securityToken);
+            var token = new JwtSecurityTokenHandler().WriteToken(securityToken);
 
             return new AccessToken
             {
@@ -43,13 +47,21 @@ namespace Core.Utilities.Identities.Jwt
             };
         }
 
-        //public Claim[] GetClaims(User user, List<RoleClaim> roleClaims)
-        //{
-        //    var claims = new List<Claim>();
-        //    foreach (var property in properties)
-        //    {
-        //        claims.Add(new Claim());
-        //    }
-        //}
+        public List<Claim> GetClaims(User user, List<RoleClaim> roleClaims)
+        {
+            var claims = new List<Claim>();
+            foreach (var roleClaim in roleClaims)
+            {
+                claims.Add(new Claim(ClaimTypes.Role,roleClaim.Name.ToLower()));
+            }
+
+            claims.AddRange(new List<Claim>
+            {
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.MobilePhone,user.PhoneNumber)
+            });
+
+            return claims;
+        }
     }
 }

@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Core.Middlewares.ExceptionHandler
@@ -52,12 +53,13 @@ namespace Core.Middlewares.ExceptionHandler
                 }.ToJson());
             }
 
-            return context.Response.WriteAsync(new ExceptionDetail
+            var exceptionResult = new ExceptionDetail
             {
                 Type = exceptionType.Name,
                 Message = message,
                 StatusCode = statusCode
-            }.ToJson());
+            }.ToJson();
+            return context.Response.WriteAsync(exceptionResult);
         }
     }
 }
