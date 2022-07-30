@@ -34,8 +34,8 @@ namespace Core.Utilities.Identities.Jwt
                 issuer: TokenOptions.Issuer,
                 audience: TokenOptions.Audience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddDays(TokenOptions.ExpirationTime),
-                notBefore: DateTime.UtcNow,
+                expires: DateTime.Now.AddDays(TokenOptions.ExpirationTime),
+                notBefore: DateTime.Now,
                 signingCredentials: signingCredentials
 
             );
@@ -50,9 +50,12 @@ namespace Core.Utilities.Identities.Jwt
         public List<Claim> GetClaims(User user, List<RoleClaim> roleClaims)
         {
             var claims = new List<Claim>();
-            foreach (var roleClaim in roleClaims)
+            if (roleClaims.Count()>0)
             {
-                claims.Add(new Claim(ClaimTypes.Role,roleClaim.Name.ToLower()));
+                foreach (var roleClaim in roleClaims)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, roleClaim.Name.ToLower()));
+                }
             }
 
             claims.AddRange(new List<Claim>

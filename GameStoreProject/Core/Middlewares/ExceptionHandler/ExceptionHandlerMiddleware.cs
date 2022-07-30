@@ -34,32 +34,37 @@ namespace Core.Middlewares.ExceptionHandler
 
         private Task ExceptionHandle(HttpContext context, Exception exception)
         {
-            context.Response.StatusCode = 400;
+            int statusCode=context.Response.StatusCode = 400;
 
-            Type exceptionType = exception.GetType();
-            int statusCode = context.Response.StatusCode;
+            var exceptionDetail = GetDetail(exception, statusCode).ToJson();
+            return context.Response.WriteAsync(exceptionDetail);
+
+        }
+
+        private ExceptionDetail GetDetail(Exception exception, int statusCode)
+        {
+            string exceptionType = exception.GetType().Name;
             string message = exception.Message;
 
-
-            if (exceptionType == typeof(ValidationException))
+            switch (exception)
             {
-                var validationException = exception as ValidationException;
-                return context.Response.WriteAsync(new ValidationExceptionDetail
-                {
-                    Type = exceptionType.Name,
-                    Message = message,
-                    StatusCode = statusCode,
-                    Errors = validationException.Errors
-                }.ToJson());
+                case ValidationException validationException:
+                    return new ValidationExceptionDetail
+                    {
+                        Type = exceptionType,
+                        StatusCode = statusCode,
+                        Message = message,
+                        Errors = validationException.Errors
+                    };
+
+                default:
+                    return new ExceptionDetail
+                    {
+                        Type = exceptionType,
+                        StatusCode = statusCode,
+                        Message = message
+                    };
             }
-
-            var exceptionResult = new ExceptionDetail
-            {
-                Type = exceptionType.Name,
-                Message = message,
-                StatusCode = statusCode
-            }.ToJson();
-            return context.Response.WriteAsync(exceptionResult);
         }
     }
 }

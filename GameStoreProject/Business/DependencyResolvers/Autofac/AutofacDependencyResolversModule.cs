@@ -37,7 +37,7 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<UserRoleClaimManager>().As<IUserRoleClaimService>().SingleInstance();
             builder.RegisterType<EfUserRoleClaimDal>().As<IUserRoleClaimDal>().SingleInstance();
 
-           // builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
+            builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
             builder.RegisterType<JwtService>().As<ITokenService>().SingleInstance();
 
 
