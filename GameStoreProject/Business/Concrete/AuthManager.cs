@@ -28,7 +28,7 @@ namespace Business.Concrete
         public IDataResult<AccessToken> Login(UserLoginDto userLoginDto)
         {
             var user=_userService.GetByLoginModel(userLoginDto.UserName, userLoginDto.Password).Data;
-            if (user!=null)
+            if (user==null)
             {
                 return new ErrorDataResult<AccessToken>();
             }

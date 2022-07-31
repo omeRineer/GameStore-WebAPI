@@ -38,8 +38,7 @@ namespace WebAPI
             services.AddServiceModules(new IServiceModule[]
             {
                 new StaticServiceModule(),
-                new MeArchitectureServiceModule(Configuration),
-                
+                new MeArchitectureServiceModule(Configuration)                
             });
 
             services.AddControllers();

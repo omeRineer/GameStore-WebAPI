@@ -49,7 +49,12 @@ namespace Core.Utilities.Identities.Jwt
 
         public List<Claim> GetClaims(User user, List<RoleClaim> roleClaims)
         {
-            var claims = new List<Claim>();
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.MobilePhone,user.PhoneNumber)
+            };
+
             if (roleClaims.Count()>0)
             {
                 foreach (var roleClaim in roleClaims)
@@ -57,12 +62,6 @@ namespace Core.Utilities.Identities.Jwt
                     claims.Add(new Claim(ClaimTypes.Role, roleClaim.Name.ToLower()));
                 }
             }
-
-            claims.AddRange(new List<Claim>
-            {
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.MobilePhone,user.PhoneNumber)
-            });
 
             return claims;
         }

@@ -15,7 +15,6 @@ namespace Core.ServiceModules
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            StaticServiceProvider.CreateInstance(services);
         }
     }
 }

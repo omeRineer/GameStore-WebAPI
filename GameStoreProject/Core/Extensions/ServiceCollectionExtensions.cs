@@ -21,6 +21,7 @@ namespace Core.Extensions
                 }
             }
 
+            StaticServiceProvider.CreateInstance(services);
             return services;
 
         }

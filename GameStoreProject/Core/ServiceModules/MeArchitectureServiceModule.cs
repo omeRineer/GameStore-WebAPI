@@ -25,7 +25,7 @@ namespace Core.ServiceModules
 
         public void Load(IServiceCollection services)
         {
-            
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
