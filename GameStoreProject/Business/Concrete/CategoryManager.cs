@@ -32,6 +32,7 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
+        [Authorize]
         public IDataResult<List<Category>> GetAll()
         {
             var result = _categoryDal.GetAll();
