@@ -1,4 +1,8 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Authorizaton;
+using Core.Aspects.Validation;
+using Core.Utilities.Identities.Claims;
 using Core.Utilities.ResultTool;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -16,6 +20,7 @@ namespace Business.Concrete
             _gameDal = gameDal;
         }
 
+        [ValidationAspect(typeof(GameValidator))]
         public IResult Add(Game game)
         {
             _gameDal.Add(game);

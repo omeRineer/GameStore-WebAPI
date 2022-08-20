@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "GameStoreProject\Business\Business.csproj", "{BC26D9D8-EC29-487A-85F3-3C3AC4CF5177}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "GameStoreProject\Business\Business.csproj", "{BC26D9D8-EC29-487A-85F3-3C3AC4CF5177}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "GameStoreProject\Core\Core.csproj", "{69FCF6EB-CC8B-4FEE-83B1-4C702C993339}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "GameStoreProject\Core\Core.csproj", "{69FCF6EB-CC8B-4FEE-83B1-4C702C993339}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "GameStoreProject\DataAccess\DataAccess.csproj", "{8E3C095E-B514-44A4-84FD-BFF801915324}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "GameStoreProject\DataAccess\DataAccess.csproj", "{8E3C095E-B514-44A4-84FD-BFF801915324}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "GameStoreProject\Entities\Entities.csproj", "{C4AC5144-C651-4794-80C0-FD78315256E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "GameStoreProject\Entities\Entities.csproj", "{C4AC5144-C651-4794-80C0-FD78315256E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "GameStoreProject\WebAPI\WebAPI.csproj", "{DC9691B9-F8D8-45F9-9EFB-DDB36C42CA73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI", "GameStoreProject\WebAPI\WebAPI.csproj", "{DC9691B9-F8D8-45F9-9EFB-DDB36C42CA73}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorUI", "BlazorUI\BlazorUI.csproj", "{BBB119C5-37F1-4957-BD03-AD2EAC919118}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{DC9691B9-F8D8-45F9-9EFB-DDB36C42CA73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC9691B9-F8D8-45F9-9EFB-DDB36C42CA73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC9691B9-F8D8-45F9-9EFB-DDB36C42CA73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBB119C5-37F1-4957-BD03-AD2EAC919118}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBB119C5-37F1-4957-BD03-AD2EAC919118}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBB119C5-37F1-4957-BD03-AD2EAC919118}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBB119C5-37F1-4957-BD03-AD2EAC919118}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

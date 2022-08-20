@@ -34,12 +34,16 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             services.AddServiceModules(new IServiceModule[]
             {
                 new StaticServiceModule(),
-                new MeArchitectureServiceModule(Configuration)                
+                new MeArchitectureServiceModule(Configuration)
             });
+
+            services.AddCors(options =>
+      options.AddDefaultPolicy(builder =>
+      builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -58,7 +62,8 @@ namespace WebAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPI v1"));
             }
 
-            
+            app.UseCors();
+
             app.UseCustomTransaction();
 
             app.UseCustomExceptionHandler();

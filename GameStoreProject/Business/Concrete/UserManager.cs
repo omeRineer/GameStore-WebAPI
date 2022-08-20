@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Authorizaton;
+using Core.Aspects.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.ResultTool;
 using DataAccess.Abstract;
@@ -18,6 +21,8 @@ namespace Business.Concrete
             _userDal = userDal;
         }
 
+        
+        [ValidationAspect(typeof(UserValidator))]
         public IResult Add(User user)
         {
             _userDal.Add(user);
@@ -55,6 +60,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<RoleClaim>>(result);
         }
 
+        [ValidationAspect(typeof(UserValidator))]
         public IResult Update(User user)
         {
             _userDal.Update(user);

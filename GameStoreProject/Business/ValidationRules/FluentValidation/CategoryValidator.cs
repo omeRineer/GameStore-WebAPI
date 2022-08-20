@@ -7,8 +7,7 @@ namespace Business.ValidationRules.FluentValidation
     {
         public CategoryValidator()
         {
-            RuleFor(x => x.Name)
-                .MinimumLength(10);
+            
         }
     }
 }

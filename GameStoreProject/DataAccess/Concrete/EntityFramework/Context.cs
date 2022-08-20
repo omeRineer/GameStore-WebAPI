@@ -16,7 +16,7 @@ namespace DataAccess.Concrete.EntityFramework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=LAPTOP-0DGVKL8C;Database=GameStore;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=LAPTOP-0DGVKL8C;Database=TestGameStore;Trusted_Connection=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Authorizaton;
+using Core.Aspects.Validation;
 using Core.Entities.Concrete;
 using Core.Utilities.ResultTool;
 using DataAccess.Abstract;
@@ -18,6 +21,7 @@ namespace Business.Concrete
             _roleClaimDal = roleClaimDal;
         }
 
+        [ValidationAspect(typeof(RoleClaimValidator))]
         public IResult Add(RoleClaim roleClaim)
         {
             _roleClaimDal.Add(roleClaim);
@@ -43,6 +47,7 @@ namespace Business.Concrete
             return new SuccessDataResult<RoleClaim>(result);
         }
 
+        [ValidationAspect(typeof(RoleClaimValidator))]
         public IResult Update(RoleClaim roleClaim)
         {
             _roleClaimDal.Update(roleClaim);

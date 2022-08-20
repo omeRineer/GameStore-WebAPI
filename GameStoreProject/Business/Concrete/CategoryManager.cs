@@ -2,6 +2,7 @@
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Authorizaton;
 using Core.Aspects.Validation;
+using Core.Utilities.Identities.Claims;
 using Core.Utilities.ResultTool;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -19,6 +20,7 @@ namespace Business.Concrete
             _categoryDal = categoryDal;
         }
 
+        [ValidationAspect(typeof(CategoryValidator))]
         public IResult Add(Category category)
         {
             _categoryDal.Add(category);
@@ -32,7 +34,6 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        [Authorize]
         public IDataResult<List<Category>> GetAll()
         {
             var result = _categoryDal.GetAll();
@@ -45,6 +46,7 @@ namespace Business.Concrete
             return new SuccessDataResult<Category>(result);
         }
 
+        [ValidationAspect(typeof(CategoryValidator))]
         public IResult Update(Category category)
         {
             _categoryDal.Update(category);

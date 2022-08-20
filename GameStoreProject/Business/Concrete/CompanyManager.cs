@@ -1,4 +1,8 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Authorizaton;
+using Core.Aspects.Validation;
+using Core.Utilities.Identities.Claims;
 using Core.Utilities.ResultTool;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -19,6 +23,7 @@ namespace Business.Concrete
             _companyDal = companyDal;
         }
 
+        [ValidationAspect(typeof(CompanyValidator))]
         public IResult Add(Company company)
         {
             _companyDal.Add(company);
@@ -44,6 +49,7 @@ namespace Business.Concrete
             return new SuccessDataResult<Company>(result);
         }
 
+        [ValidationAspect(typeof(CompanyValidator))]
         public IResult Update(Company company)
         {
             _companyDal.Update(company);

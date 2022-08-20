@@ -1,0 +1,33 @@
+﻿@page "/game/{gameId:int}"
+@inject IGameService gameService
+
+@if (game == null)
+{
+    <h4>Loading...</h4>
+}
+else
+{
+    <h3>@game.Name</h3>
+    <hr />
+    <div class="row">
+        <div class="col-md-8">
+            <GameGallery />
+        </div>
+        <div class="col-md-4">
+            <GameDetail />
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int GameId { get; set; }
+
+    private GameViewModel game { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await gameService.GetById(GameId);
+        game = result.Data;
+    }
+}
