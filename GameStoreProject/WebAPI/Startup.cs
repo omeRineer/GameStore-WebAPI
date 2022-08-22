@@ -1,3 +1,5 @@
+using AutoMapper;
+using Business.Mapping.Automapper.Profiles;
 using Core.Extensions;
 using Core.ServiceModules;
 using Core.Utilities.Helpers;
@@ -41,10 +43,21 @@ namespace WebAPI
                 new MeArchitectureServiceModule(Configuration)
             });
 
-            services.AddCors(options =>
-      options.AddDefaultPolicy(builder =>
-      builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
+            services.AddAutoMapper(x =>
+            {
+                var profiles = new List<Profile>
+                {
+                    new GameProfile()
+                };
 
+                x.AddProfiles(profiles);
+            });
+
+
+
+            services.AddCors(options =>
+                        options.AddDefaultPolicy(builder =>
+                        builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

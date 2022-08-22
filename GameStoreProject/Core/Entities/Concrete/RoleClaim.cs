@@ -12,6 +12,6 @@ namespace Core.Entities.Concrete
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public IEnumerable<UserRoleClaim> UserRoleClaims { get; set; }
+        public virtual IEnumerable<UserRoleClaim> UserRoleClaims { get; set; }
     }
 }

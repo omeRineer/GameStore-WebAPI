@@ -19,7 +19,7 @@ namespace WebAPI.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var result = _gameService.GetAll();
+            var result = _gameService.GetAllDto();
             if (!result.Success)
             {
                 return BadRequest(result);

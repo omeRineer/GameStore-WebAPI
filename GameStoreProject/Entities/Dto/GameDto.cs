@@ -5,22 +5,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Concrete
+namespace Entities.Dto
 {
-    public class Game:IEntity
+    public class GameDto:IDto
     {
         public int Id { get; set; }
         public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
         public int DeveloperId { get; set; }
+        public string DeveloperName { get; set; }
         public int DistributorId { get; set; }
+        public string DistributorName { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public DateTime ReleaseDate { get; set; }
         public string Description { get; set; }
-
-        public virtual Company Developer { get; set; }
-        public virtual Company Distributor { get; set; }
-        public virtual Category Category { get; set; }
-        public virtual ICollection<GameImage> GameImages { get; set; }
     }
 }

@@ -10,6 +10,9 @@ using Microsoft.IdentityModel.Tokens;
 using Core.Utilities.Identities.Jwt;
 using Core.Utilities.Helpers;
 using Microsoft.AspNetCore.Http;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using AutoMapper;
 
 namespace Core.ServiceModules
 {
@@ -42,6 +45,12 @@ namespace Core.ServiceModules
 
                     };
                 });
+
+            services.AddControllers().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
+
         }
     }
 }

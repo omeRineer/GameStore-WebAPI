@@ -9,6 +9,6 @@ namespace Entities.Concrete
         public string Name { get; set; }
         public string WebSite { get; set; }
 
-        public ICollection<Game> Games { get; set; }
+        public virtual ICollection<Game> Games { get; set; }
     }
 }

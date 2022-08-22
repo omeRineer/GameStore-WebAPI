@@ -8,7 +8,7 @@ namespace Core.Entities.Concrete
         public int UserId { get; set; }
         public int RoleClaimId { get; set; }
 
-        public User User { get; set; }
-        public RoleClaim RoleClaim { get; set; }
+        public virtual User User { get; set; }
+        public virtual RoleClaim RoleClaim { get; set; }
     }
 }

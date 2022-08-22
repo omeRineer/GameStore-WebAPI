@@ -1,5 +1,7 @@
 ﻿using Core.Entities.Abstract;
+using Core.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,21 +35,28 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
-        public TEntity Get(Expression<Func<TEntity, bool>> filter)
+        public TEntity Get(Expression<Func<TEntity, bool>> filter,
+                           Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null)
         {
             using (Context context = new Context())
             {
+                IQueryable<TEntity> query=context.Set<TEntity>();
                 return context.Set<TEntity>().FirstOrDefault(filter);
             }
         }
 
-        public List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null)
+        public List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null,
+                                    Func<IQueryable<TEntity>,IIncludableQueryable<TEntity,object>> includes=null)
         {
             using (Context context = new Context())
             {
-                return filter != null
-                       ? context.Set<TEntity>().Where(filter).ToList()
-                       : context.Set<TEntity>().ToList();
+                IQueryable<TEntity> query = context.Set<TEntity>();
+
+
+                if (includes != null) query = includes(query);
+                if (filter != null) query = query.Where(filter);
+
+                return query.ToList();
             }
         }
 

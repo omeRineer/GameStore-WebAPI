@@ -12,6 +12,6 @@ namespace Entities.Concrete
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public ICollection<GameImage> GameImages { get; set; }
+        public virtual ICollection<GameImage> GameImages { get; set; }
     }
 }

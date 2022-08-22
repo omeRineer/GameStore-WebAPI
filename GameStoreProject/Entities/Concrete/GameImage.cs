@@ -15,7 +15,7 @@ namespace Entities.Concrete
         public string ImagePath { get; set; }
         public bool State { get; set; }
 
-        public ImageCategory Category { get; set; }
-        public Game Game { get; set; }
+        public virtual ImageCategory Category { get; set; }
+        public virtual Game Game { get; set; }
     }
 }

@@ -21,8 +21,11 @@ namespace DataAccess.Concrete.EntityFramework.ModelConfigurations
                    .HasMaxLength(100);
 
             builder.HasMany(x => x.Games)
-                   .WithOne(x => x.Company)
-                   .HasForeignKey(x => x.DistributorId)
+                   .WithOne(x => x.Distributor)
+                   .HasForeignKey(x => x.DistributorId);
+
+            builder.HasMany(x => x.Games)
+                   .WithOne(x => x.Developer)
                    .HasForeignKey(x => x.DeveloperId);
         }
     }
