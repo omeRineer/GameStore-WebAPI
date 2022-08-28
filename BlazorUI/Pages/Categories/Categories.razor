@@ -1,8 +1,49 @@
 ﻿@page "/categories"
-@inject HttpClient Http
+@inject ICategoryService categoryService;
 
+<div class="filter bg-dark w-100 p-3 text-white">
+    <div class="filter-header">
+        <h4>Filtre</h4>
+    </div>
 
+    <hr class="text-white">
+
+    <div class="filter-body">
+        <h5>Kategori</h5>
+        <div class="filter-categories bg-white text-dark p-3">
+            @if (categories != null)
+            {
+                @foreach (var category in categories.OrderBy(x => x.Name))
+                {
+                    <div class="d-flex justify-content-between align-content-center">
+                        <label class="form-label h6 fw-bold m-0">@category.Name</label>
+                        <input type="checkbox" class="form-check-inline" />
+                    </div>
+
+                    <hr class="text-dark" />
+                }
+            }
+        </div>
+    </div>
+
+    <hr class="text-white">
+
+    <div class="filter-footer d-flex justify-content-between">
+        <button class="btn btn-danger">
+            Temizle
+        </button>
+        <button class="btn btn-success">
+            Ara
+        </button>
+    </div>
+</div>
 
 @code {
+    private List<CategoryViewModel> categories;
 
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await categoryService.GetAll();
+        categories = result.Data;
+    }
 }

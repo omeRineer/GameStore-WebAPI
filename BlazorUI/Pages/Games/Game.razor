@@ -14,14 +14,14 @@ else
             <GameGallery />
         </div>
         <div class="col-md-4">
-            <GameDetail />
+            <GameDetail Game="@game" />
         </div>
     </div>
 }
 
 @code {
-    [Parameter]
-    public int GameId { get; set; }
+
+    [Parameter] public int GameId { get; set; }
 
     private GameViewModel game { get; set; }
 

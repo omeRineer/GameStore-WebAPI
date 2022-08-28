@@ -3,6 +3,7 @@ using Autofac.Extras.DynamicProxy;
 using Business.Abstract;
 using Business.Concrete;
 using Castle.DynamicProxy;
+using Core.Utilities.Helpers.FileHelper;
 using Core.Utilities.Identities.Jwt;
 using Core.Utilities.Interceptor;
 using DataAccess.Abstract;
@@ -40,8 +41,12 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<GamerManager>().As<IGamerService>().SingleInstance();
             builder.RegisterType<EfGamerDal>().As<IGamerDal>().SingleInstance();
 
+            builder.RegisterType<GameImageManager>().As<IGameImageService>().SingleInstance();
+            builder.RegisterType<EfGameImageDal>().As<IGameImageDal>().SingleInstance();
+
             builder.RegisterType<AuthManager>().As<IAuthService>().SingleInstance();
             builder.RegisterType<JwtService>().As<ITokenService>().SingleInstance();
+            builder.RegisterType<FileTool>().As<IFileTool>().SingleInstance();
 
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();

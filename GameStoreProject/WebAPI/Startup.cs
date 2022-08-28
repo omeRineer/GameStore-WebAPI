@@ -25,29 +25,31 @@ namespace WebAPI
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-            TokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
-        }
         public TokenOptions TokenOptions;
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Environment { get; }
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
+        {
+            Configuration = configuration;
+            Environment = environment;
+            TokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+        }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+
         public void ConfigureServices(IServiceCollection services)
         {
 
             services.AddServiceModules(new IServiceModule[]
             {
                 new StaticServiceModule(),
-                new MeArchitectureServiceModule(Configuration)
+                new MeArchitectureServiceModule(Configuration,Environment)
             });
 
             services.AddAutoMapper(x =>
             {
                 var profiles = new List<Profile>
                 {
-                    new GameProfile()
+                    new MapProfile()
                 };
 
                 x.AddProfiles(profiles);
@@ -65,7 +67,7 @@ namespace WebAPI
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -76,6 +78,8 @@ namespace WebAPI
             }
 
             app.UseCors();
+
+            app.UseStaticFiles();
 
             app.UseCustomTransaction();
 

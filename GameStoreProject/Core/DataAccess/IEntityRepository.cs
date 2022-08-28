@@ -16,7 +16,9 @@ namespace Core.DataAccess
         TEntity Get(Expression<Func<TEntity, bool>> filter,
                     Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null);
         void Add(TEntity entity);
+        void AddList(List<TEntity> entities);
         void Delete(TEntity entity);
+        void DeleteList(List<TEntity> entities);
         void Update(TEntity entity);
     }
 }

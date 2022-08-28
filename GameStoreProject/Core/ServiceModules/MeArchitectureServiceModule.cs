@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Http;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 using AutoMapper;
+using Core.Extensions;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Core.ServiceModules
 {
@@ -20,9 +22,12 @@ namespace Core.ServiceModules
     {
         private readonly IConfiguration Configuration;
         private readonly TokenOptions TokenOptions;
-        public MeArchitectureServiceModule(IConfiguration configuration)
+        private readonly IWebHostEnvironment Environment;
+        public MeArchitectureServiceModule(IConfiguration configuration,
+                                           IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            Environment=environment;
             TokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
         }
 
@@ -49,6 +54,11 @@ namespace Core.ServiceModules
             services.AddControllers().AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
+
+            services.AddFileTool(x =>
+            {
+                x.BasePath = $"{Environment.WebRootPath}/Files";
             });
 
         }

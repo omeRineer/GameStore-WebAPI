@@ -11,9 +11,6 @@ namespace DataAccess.Concrete.EntityFramework.ModelConfigurations
             builder.Property(x => x.ImagePath)
                    .IsRequired();
 
-            builder.Property(x => x.CategoryId)
-                   .IsRequired();
-
             builder.Property(x => x.GameId)
                    .IsRequired();
         }

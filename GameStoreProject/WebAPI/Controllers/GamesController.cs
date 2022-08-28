@@ -1,7 +1,9 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Entities.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace WebAPI.Controllers
 {
@@ -19,7 +21,7 @@ namespace WebAPI.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var result = _gameService.GetAllDto();
+            var result = _gameService.GetAll();
             if (!result.Success)
             {
                 return BadRequest(result);
@@ -30,7 +32,7 @@ namespace WebAPI.Controllers
         [HttpGet("{gameId}")]
         public IActionResult GetById(int gameId)
         {
-            var result = _gameService.GetById(gameId);
+            var result = _gameService.GetByIdDto(gameId);
             if (!result.Success)
             {
                 return BadRequest(result);
@@ -70,5 +72,17 @@ namespace WebAPI.Controllers
             }
             return Ok(result);
         }
+
+        [HttpPost("fileupload")]
+        public IActionResult FileUpload([FromForm] GameImageUploadDto gameImageDto)
+        {
+            var result = _gameService.ImageUpload(gameImageDto);
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
     }
 }

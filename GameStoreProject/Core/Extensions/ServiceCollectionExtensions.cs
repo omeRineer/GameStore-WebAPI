@@ -1,4 +1,5 @@
 ﻿using Core.ServiceModules;
+using Core.Utilities.Helpers.FileHelper;
 using Core.Utilities.ServiceProvider;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -24,6 +25,13 @@ namespace Core.Extensions
             StaticServiceProvider.CreateInstance(services);
             return services;
 
+        }
+
+        public static IServiceCollection AddFileTool(this IServiceCollection services, Action<FileOptions> options)
+        {
+            services.AddSingleton<IFileTool, FileTool>();
+            services.Configure(options);
+            return services;
         }
     }
 }

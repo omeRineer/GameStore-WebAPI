@@ -4,19 +4,45 @@
     <div class="game-detail-header">
         <img src="https://cdn.webtekno.com/media/cache/content_detail_v2/article/56259/the-witcher-in-netfilx-versiyonundaki-geralt-ilk-defa-gosterildi-1541007852.jpg" class="company-img">
 
-        <h3 class="text-light p-3 d-inline">The Witcher</h3>
+        <h5 class="text-light p-3 d-inline">@Game.Name</h5>
     </div>
 
-    <hr class="border-2 text-light"/>
+    <hr class="border-2 text-light" />
 
-    <div class="game-detail-body">
-
+    <div class="game-detail-body h-65">
+        <p class="text-white">
+            @Game.Description
+        </p>
+        <table class="table table-borderless table-hover text-white">
+            <tr>
+                <th>Kategori</th>
+                <td class="text-right">@Game.CategoryName</td>
+            </tr>
+            <tr>
+                <th>Geliştirici</th>
+                <td class="text-right">@Game.DeveloperName</td>
+            </tr>
+            <tr>
+                <th>Dağıtıcı</th>
+                <td class="text-right">@Game.DistributorName</td>
+            </tr>
+            <tr>
+                <th>Yayınlama Tarihi</th>
+                <td class="text-right">@String.Format("{0:d}", Game.ReleaseDate)</td>
+            </tr>
+        </table>
     </div>
 
+    <hr class="border-2 text-light" />
+
+    <div class="game-detail-footer">
+        <button class="btn btn-light">
+            Satın al
+        </button>
+    </div>
 </div>
 
 @code {
-
 
     [Parameter] public GameViewModel Game { get; set; }
 

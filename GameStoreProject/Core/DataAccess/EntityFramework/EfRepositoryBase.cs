@@ -25,6 +25,16 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
+        public void AddList(List<TEntity> entities)
+        {
+            using (Context context=new Context())
+            {
+                var dbEntities=context.Set<TEntity>();
+                dbEntities.AddRange(entities);
+                context.SaveChanges();
+            }
+        }
+
         public void Delete(TEntity entity)
         {
             using (Context context = new Context())
@@ -35,18 +45,31 @@ namespace Core.DataAccess.EntityFramework
             }
         }
 
+        public void DeleteList(List<TEntity> entities)
+        {
+            using (Context context=new Context())
+            {
+                var dbEntities = context.Set<TEntity>();
+                dbEntities.RemoveRange(entities);
+                context.SaveChanges();
+            }
+        }
+
         public TEntity Get(Expression<Func<TEntity, bool>> filter,
                            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null)
         {
             using (Context context = new Context())
             {
-                IQueryable<TEntity> query=context.Set<TEntity>();
-                return context.Set<TEntity>().FirstOrDefault(filter);
+                IQueryable<TEntity> query = context.Set<TEntity>();
+
+                if (includes != null) query = includes(query);
+
+                return query.FirstOrDefault(filter);
             }
         }
 
         public List<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null,
-                                    Func<IQueryable<TEntity>,IIncludableQueryable<TEntity,object>> includes=null)
+                                    Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null)
         {
             using (Context context = new Context())
             {

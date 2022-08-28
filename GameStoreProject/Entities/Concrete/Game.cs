@@ -18,8 +18,7 @@ namespace Entities.Concrete
         public DateTime ReleaseDate { get; set; }
         public string Description { get; set; }
 
-        public virtual Company Developer { get; set; }
-        public virtual Company Distributor { get; set; }
+        public virtual Company Company { get; set; }
         public virtual Category Category { get; set; }
         public virtual ICollection<GameImage> GameImages { get; set; }
     }

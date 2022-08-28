@@ -36,6 +36,5 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<Company> Companies { get; set; }
         public DbSet<Gamer> Gamers { get; set; }
         public DbSet<GameImage> GameImages { get; set; }
-        public DbSet<ImageCategory> ImageCategories { get; set; }
     }
 }
